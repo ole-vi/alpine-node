@@ -49,6 +49,21 @@ is_base() {
   echo "true"
 }
 
+compare() {
+  local base_sha    # treehouses/alpine
+  local image_sha   # for example treehouses/node
+  local flag   # output
+  local base_repo=$1   # treehouses/alpine
+  local image_repo=$2  # treehouses/node
+  local arch=$3  #arm arm64 amd64
+  base_sha=$(get_manifest_sha $base_repo $arch)
+  #echo $base_sha
+  image_sha=$(get_manifest_sha $image_repo $arch)
+  #echo $image_sha
+  flag=$(is_base "$base_repo@"$base_sha "$image_repo@"$image_sha)
+  echo $flag
+}
+
 image_version() {
   local version
   repo=$1    # nginx repo
